@@ -1,0 +1,9 @@
+defaults:
+  - model_type: ???
+    optional: True
+  - model_name: ???
+    optional: True
+  - dataset: ???
+    optional: True
+  - models: ${defaults.0.model_type}
+  - data: ${defaults.1.dataset}

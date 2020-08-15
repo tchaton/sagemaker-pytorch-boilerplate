@@ -7,40 +7,25 @@
 from __future__ import print_function
 
 import os
+import hydra
+os.environ["HYDRA_FULL_ERROR"] = '1'
 import os.path as osp
 import json
 import pickle
 import sys
 import traceback
-import hydra
-from hydra.core.config_store import ConfigStore
-from src.configs.train_config import 
+from src.configs.train_config import *
 from src.training import train
 
-# These are the paths to where SageMaker mounts interesting things in your container.
-PREFIX = '/opt/ml/'
-INPUT_PATH = osp.join(PREFIX, 'input/data')
-OUTPUT_PATH = osp.join(PREFIX, 'output')
-MODEL_PATH = osp.join(PREFIX, 'model')
-PARAM_PATH = osp.join(PREFIX, 'input/config/hyperparameters.json')
-CHANNEL_NAME = 'training'
-TRAINING_PATH = os.path.join(INPUT_PATH, CHANNEL_NAME)
 
+# https://hydra.cc/docs/next/tutorials/structured_config/hierarchical_static_config
+@hydra.main(config_path="conf", config_name="config")
+def hydra_main(cfg):
+    OmegaConf.set_struct(cfg, False)  # This allows getattr and hasattr methods to function correctly
+    if cfg.pretty_print:
+        print(cfg.pretty())
 
-cs = ConfigStore.instance()
-cs.store(name="config", node=DeepSpeechConfig)
-cs.store(group="optim", name="sgd", node=SGDConfig)
-cs.store(group="optim", name="adam", node=AdamConfig)
-cs.store(group="checkpointing", name="file", node=FileCheckpointConfig)
-cs.store(group="checkpointing", name="gcs", node=GCSCheckpointConfig)
-cs.store(group="model", name="bidirectional", node=BiDirectionalConfig)
-cs.store(group="model", name="unidirectional", node=UniDirectionalConfig)
-
-
-@hydra.main(config_name="config")
-def hydra_main(cfg: DeepSpeechConfig):
     train(cfg=cfg)
-
 
 if __name__ == '__main__':
     hydra_main()

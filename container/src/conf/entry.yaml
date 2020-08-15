@@ -1,0 +1,12 @@
+defaults:
+  - model_type: ??? # Type of model to use, e.g. pointnet2, rsconv etc...
+    optional: True
+  - dataset: ???
+    optional: True
+
+  - lr_scheduler: exponential
+  - training: default
+
+  - debugging: default.yaml
+  - models: ${defaults.0.model_type}
+  - data: ${defaults.1.dataset}

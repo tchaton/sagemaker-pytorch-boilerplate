@@ -22,7 +22,7 @@ Used to make quick dev.
 
 ```bash
 source .venv/bin/activate
-python container/src/train +model_type=model_template +model_name=my_template_model +dataset=dataset_template
+python container/src/train model={MODEL} dataset={DATASET}
 ```
 
 or within docker image

@@ -32,6 +32,7 @@ class Config:
     model: Any = MISSING
     dataset: Any = MISSING
     trainer: Trainer = Trainer()
+    mode: str = "local"
 
 
 cs = ConfigStore.instance()

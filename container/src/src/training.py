@@ -4,23 +4,28 @@ import random
 import torch
 import hydra
 from pytorch_lightning import Trainer
-from src.models.mlp import Model
-from src.datasets.mnist import MNISTDataset
+from pytorch_lightning.callbacks import ModelCheckpoint
 
-
-# These are the paths to where SageMaker mounts interesting things in your container.
-PREFIX = "/opt/ml/"
-INPUT_PATH = osp.join(PREFIX, "input/data")
-OUTPUT_PATH = osp.join(PREFIX, "output")
-MODEL_PATH = osp.join(PREFIX, "model")
-PARAM_PATH = osp.join(PREFIX, "input/config/hyperparameters.json")
-CHANNEL_NAME = "training"
-TRAINING_PATH = os.path.join(INPUT_PATH, CHANNEL_NAME)
+from src.paths import Paths
 
 
 def train(cfg):
 
+    P = Paths(cfg)
+
     data_module = hydra.utils.instantiate(cfg.dataset)
     model = hydra.utils.instantiate(cfg.model)
-    trainer = Trainer()
+
+    checkpoint_callback = ModelCheckpoint(
+        filepath=P.MODEL_PATH,
+        save_top_k=1,
+        verbose=True,
+        monitor="val_loss",
+        mode="min",
+        prefix="",
+    )
+
+    trainer = Trainer(checkpoint_callback=checkpoint_callback, max_epochs=2)
     trainer.fit(model, data_module)
+    trainer.save_checkpoint(osp.join(P.MODEL_PATH, "model.ckpt"))
+    print("Training complete.")

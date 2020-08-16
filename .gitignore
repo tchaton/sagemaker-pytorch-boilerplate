@@ -106,3 +106,4 @@ data/*_dataset/
 outputs/*
 container/Dockerfile
 requirements.txt
+multirun/*

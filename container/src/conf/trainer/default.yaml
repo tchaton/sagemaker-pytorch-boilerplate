@@ -1,0 +1,3 @@
+trainer:
+  max_epochs: 100
+  gpus: 0

@@ -1,0 +1,5 @@
+models:
+  my_template_model:
+    target: src.models
+  params:
+    something: 1

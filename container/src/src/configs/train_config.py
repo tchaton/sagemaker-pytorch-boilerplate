@@ -7,8 +7,7 @@ from hydra.types import *
 defaults = [
     {"model_type": MISSING},
     {"model_name": MISSING},
-    {"dataset": MISSING},
-    {"trainer": MISSING},
+    {"dataset": MISSING}
 ]
 
 @dataclass
@@ -24,6 +23,9 @@ class DatasetConf(ObjectConf):
 class ModelConf(ObjectConf):
     pass
 
+class TrainerConf(ObjectConf):
+    pass
+
 @dataclass
 class Config:
     defaults: List[Any] = field(default_factory=lambda: defaults)
@@ -32,3 +34,5 @@ cs = ConfigStore.instance()
 cs.store(name="config", node=Config)
 cs.store(name="model", node=ModelConf)
 cs.store(name="data", node=DatasetConf)
+cs.store(name="trainer", node=TrainerConf)
+

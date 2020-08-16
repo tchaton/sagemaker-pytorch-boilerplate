@@ -1,5 +1,5 @@
 datasets:
   my_template_dataset:
-    target: src
+    target: src.datasets.dataset_template.Dataset
   params:
     something: 1

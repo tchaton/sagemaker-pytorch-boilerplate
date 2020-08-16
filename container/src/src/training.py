@@ -15,5 +15,7 @@ CHANNEL_NAME = 'training'
 TRAINING_PATH = os.path.join(INPUT_PATH, CHANNEL_NAME)
 
 def train(cfg):
+
+    import pdb; pdb.set_trace()
     
-    trainer = Trainer(cfg.trainer)
+    trainer = Trainer()

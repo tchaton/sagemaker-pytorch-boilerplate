@@ -1,8 +1,9 @@
 defaults:
-  - model_type: model_template
+  - model_type: ???
     optional: True
-  - model_name: my_template_model
+  - model_name: ???
     optional: True
-  - dataset: dataset_template
+  - dataset: ???
     optional: True
-  - trainer: default
+  - models: ${defaults.1.model_type}
+  - datasets: ${defaults.2.dataset}

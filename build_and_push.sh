@@ -1,5 +1,7 @@
 # The name of our algorithm
 image=$1
+MODEL=$2
+DATASET=$3
 
 if [ "$image" == "" ]
 then
@@ -35,7 +37,7 @@ fi
 # Build the docker image locally with the image name and then push it to ECR
 # with the full name.
 python render_docker.py
-docker build  -t ${image} .
+docker build --build-arg MODEL=$MODEL --build-arg DATASET=$DATASET -t ${image} .
 docker tag ${image}:latest ${fullname}
 
 aws ecr get-login-password \
@@ -45,3 +47,4 @@ aws ecr get-login-password \
     --password-stdin ${account}.dkr.ecr.${region}.amazonaws.com
 
 docker push ${fullname}
+echo ${fullname}

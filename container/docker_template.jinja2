@@ -39,5 +39,13 @@ RUN rm -f /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
 
 # Set up the program in the image
 COPY src /opt/program
+
+ARG MODEL=""
+ARG DATASET=""
+
+# Setup location of model for forward inference
+RUN sed -i "/model:/c\model: $MODEL" /opt/program/conf/config.yaml
+RUN sed -i "/dataset:/c\dataset: $DATASET" /opt/program/conf/config.yaml
+
 WORKDIR /opt/program
 

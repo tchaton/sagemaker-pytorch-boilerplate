@@ -7,3 +7,5 @@ defaults:
     optional: True
   - models: ${defaults.1.model_type}
   - datasets: ${defaults.2.dataset}
+
+seed: 42

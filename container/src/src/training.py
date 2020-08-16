@@ -1,8 +1,11 @@
 import os
 import os.path as osp
-
+import random
+import torch
 import hydra
 from pytorch_lightning import Trainer
+from src.models.mlp import Model
+from src.datasets.mnist import MNISTDataset
 
 
 # These are the paths to where SageMaker mounts interesting things in your container.
@@ -16,6 +19,12 @@ TRAINING_PATH = os.path.join(INPUT_PATH, CHANNEL_NAME)
 
 def train(cfg):
 
-    import pdb; pdb.set_trace()
-    
+    data_module = MNISTDataset(  
+            data_dir = '.',
+            val_split = 5000,
+            num_workers = 16,
+            normalize = False,
+            seed = 42)
+    model = Model()
     trainer = Trainer()
+    trainer.fit(model, data_module)

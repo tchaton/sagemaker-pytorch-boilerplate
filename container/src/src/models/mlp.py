@@ -1,4 +1,9 @@
-class LitClassifier(pl.LightningModule):
+import os
+import torch
+from torch.nn import functional as F
+import pytorch_lightning as pl
+
+class Model(pl.LightningModule):
 
     def __init__(self):
         super().__init__()

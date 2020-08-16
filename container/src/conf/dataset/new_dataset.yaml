@@ -1,4 +1,0 @@
-# @package _group_
-target: src.models.model_template.Model
-params:
-  something: 1

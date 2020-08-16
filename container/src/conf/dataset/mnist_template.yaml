@@ -1,4 +1,8 @@
 # @package _group_
-target: src.models.model_template.Model
+target: src.datasets.mnist.MNISTDataset
 params:
-  something: 1
+  data_dir: '.'
+  val_split: 5000
+  num_workers: 16
+  normalize: False
+  seed: 42

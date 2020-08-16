@@ -9,22 +9,18 @@ from src.datasets.mnist import MNISTDataset
 
 
 # These are the paths to where SageMaker mounts interesting things in your container.
-PREFIX = '/opt/ml/'
-INPUT_PATH = osp.join(PREFIX, 'input/data')
-OUTPUT_PATH = osp.join(PREFIX, 'output')
-MODEL_PATH = osp.join(PREFIX, 'model')
-PARAM_PATH = osp.join(PREFIX, 'input/config/hyperparameters.json')
-CHANNEL_NAME = 'training'
+PREFIX = "/opt/ml/"
+INPUT_PATH = osp.join(PREFIX, "input/data")
+OUTPUT_PATH = osp.join(PREFIX, "output")
+MODEL_PATH = osp.join(PREFIX, "model")
+PARAM_PATH = osp.join(PREFIX, "input/config/hyperparameters.json")
+CHANNEL_NAME = "training"
 TRAINING_PATH = os.path.join(INPUT_PATH, CHANNEL_NAME)
+
 
 def train(cfg):
 
-    data_module = MNISTDataset(  
-            data_dir = '.',
-            val_split = 5000,
-            num_workers = 16,
-            normalize = False,
-            seed = 42)
-    model = Model()
+    data_module = hydra.utils.instantiate(cfg.dataset)
+    model = hydra.utils.instantiate(cfg.model)
     trainer = Trainer()
     trainer.fit(model, data_module)

@@ -3,9 +3,9 @@ import torch
 from torch.nn import functional as F
 import pytorch_lightning as pl
 
-class Model(pl.LightningModule):
 
-    def __init__(self):
+class Model(pl.LightningModule):
+    def __init__(self, *args, **kwargs):
         super().__init__()
         self.l1 = torch.nn.Linear(28 * 28, 10)
 
@@ -15,8 +15,8 @@ class Model(pl.LightningModule):
     def training_step(self, batch, batch_nb):
         x, y = batch
         loss = F.nll_loss(self(x), y)
-        tensorboard_logs = {'train_loss': loss}
-        return {'loss': loss, 'log': tensorboard_logs}
+        tensorboard_logs = {"train_loss": loss}
+        return {"loss": loss, "log": tensorboard_logs}
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=0.02)

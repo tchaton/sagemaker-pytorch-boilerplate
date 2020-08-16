@@ -12,7 +12,8 @@ sh build_local_env.sh 3.7.8 # It will create a local env to ease local dev
 ```
 
 ```bash
-sh build_and_push.sh {IMAGE_NAME} # It will build the folder container and push the image to AWS Elastic Container Registry (ECR)
+sh build_and_push.sh {IMAGE_NAME} {MODEL} {DATASET}
+# It will build the folder container and push the image to AWS Elastic Container Registry (ECR)
 ```
 
 Train Locally:

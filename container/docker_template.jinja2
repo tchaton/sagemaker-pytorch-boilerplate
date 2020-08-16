@@ -44,8 +44,8 @@ ARG MODEL=""
 ARG DATASET=""
 
 # Setup location of model for forward inference
-RUN sed -i "/model:/c\model: $MODEL" /opt/program/conf/config.yaml
-RUN sed -i "/dataset:/c\dataset: $DATASET" /opt/program/conf/config.yaml
+RUN sed -i "/model:/c\- model: $MODEL" /opt/program/conf/config.yaml
+RUN sed -i "/dataset:/c\- dataset: $DATASET" /opt/program/conf/config.yaml
 
 WORKDIR /opt/program
 

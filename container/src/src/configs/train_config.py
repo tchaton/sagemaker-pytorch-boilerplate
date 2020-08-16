@@ -30,7 +30,7 @@ class Config:
     defaults: List[Any] = field(default_factory=lambda: defaults)
     # Hydra will populate this field based on the defaults list
     model: Any = MISSING
-    model: Any = MISSING
+    dataset: Any = MISSING
     trainer: Trainer = Trainer()
 
 

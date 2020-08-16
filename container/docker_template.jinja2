@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM python:3.7-slim
 
 LABEL maintainer="thomas.chaton.ai@gmail.com"
 
@@ -31,7 +31,11 @@ RUN rm -rf /root/.cache
 
 ENV PYTHONUNBUFFERED=TRUE
 ENV PYTHONDONTWRITEBYTECODE=TRUE
-ENV PATH="/opt/program:${PATH}"
+ENV PYTHON=$ENV/bin/python
+ENV PIP=$ENV/bin/pip
+ENV PATH="/opt/program:${PATH}"  
+
+RUN rm -f /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
 
 # Set up the program in the image
 COPY src /opt/program

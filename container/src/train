@@ -21,7 +21,6 @@ from src.training import train
 # https://hydra.cc/docs/next/tutorials/structured_config/hierarchical_static_config
 @hydra.main(config_path="conf", config_name="config")
 def hydra_main(cfg):
-    OmegaConf.set_struct(cfg, False)  # This allows getattr and hasattr methods to function correctly
     if cfg.pretty_print:
         print(cfg.pretty())
 

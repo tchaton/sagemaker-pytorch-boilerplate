@@ -1,11 +1,3 @@
 defaults:
-  - model_type: ???
-    optional: True
-  - model_name: ???
-    optional: True
+  - model: ???
   - dataset: ???
-    optional: True
-  - models: ${defaults.1.model_type}
-  - datasets: ${defaults.2.dataset}
-
-seed: 42

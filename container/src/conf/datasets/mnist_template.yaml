@@ -1,5 +1,0 @@
-datasets:
-  my_template_dataset:
-    target: src.datasets.mnist.MNISTDataset
-  params:
-    something: 1

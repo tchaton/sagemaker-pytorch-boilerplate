@@ -2,9 +2,19 @@ from dataclasses import dataclass, field
 from typing import *
 
 from hydra.core.config_store import ConfigStore
-from hydra.types import *
+from omegaconf import MISSING
 
-defaults = [{"model_type": MISSING}, {"model_name": MISSING}, {"dataset": MISSING}]
+defaults = [
+    # An error will be raised if the user forgets to specify `db=...`
+    {"model": MISSING},
+    {"dataset": MISSING},
+]
+
+
+@dataclass
+class Trainer:
+    max_epochs: int = 100
+    gpus: int = 0
 
 
 @dataclass
@@ -15,27 +25,20 @@ class ObjectConf(Dict[str, Any]):
     params: Any = field(default_factory=dict)
 
 
-class DatasetConf(ObjectConf):
-    pass
-
-
-class ModelConf(ObjectConf):
-    pass
-
-
-class TrainerConf(ObjectConf):
-    pass
-
-
 @dataclass
 class Config:
     defaults: List[Any] = field(default_factory=lambda: defaults)
-    seed: int = 42
+    # Hydra will populate this field based on the defaults list
+    model: Any = MISSING
+    model: Any = MISSING
+    trainer: Trainer = Trainer()
 
 
 cs = ConfigStore.instance()
 cs.store(name="config", node=Config)
-cs.store(name="model", node=ModelConf)
-cs.store(name="data", node=DatasetConf)
-cs.store(name="trainer", node=TrainerConf)
+cs.store(group="model", name="mlp_template", node=ObjectConf)
+cs.store(group="model", name="new_model", node=ObjectConf)
+cs.store(group="dataset", name="mnist_template", node=ObjectConf)
+cs.store(group="dataset", name="new_dataset", node=ObjectConf)
+cs.store(group="trainer", name="default", node=Trainer)
 

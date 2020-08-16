@@ -32,7 +32,7 @@ fi
 
 # Build the docker image locally with the image name and then push it to ECR
 # with the full name.
-
+python render_docker.py
 docker build  -t ${image} .
 docker tag ${image}:latest ${fullname}
 

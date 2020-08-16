@@ -6,6 +6,8 @@ This project is a boilerplate codebase to `train / serve / publish` Pytorch Mode
 
 We aim at simplifying MLOps worflow by providing a template for production ready development, allowing ML engineer to focus uniquely on their models and datasets. 
 
+We rely on [Hydra](https://hydra.cc) for elegantly configuring our application and [Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/), lightweight PyTorch wrapper for ML researchers to scale our model with less boilerplate.
+
 # How to use this project
 
 ```bash

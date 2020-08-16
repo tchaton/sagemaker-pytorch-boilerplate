@@ -4,9 +4,9 @@ from typing import Any, List
 from hydra.core.config_store import ConfigStore
 
 defaults = [
-    {"model_type": "MISSING"},
-    {"model_name": "MISSING"},
-    {"dataset": "MISSING"},
+    {"model_type": "NULL"},
+    {"model_name": "NULL"},
+    {"dataset": "NULL"},
 ]
 
 @dataclass

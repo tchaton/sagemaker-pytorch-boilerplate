@@ -100,7 +100,9 @@ ENV/
 # mkdocs documentation
 /site
 
-# deepspeech.pytorch-specific dirs
 *.csv
 data/*_dataset/
 .vscode/
+outputs/*
+container/Dockerfile
+requirements.txt

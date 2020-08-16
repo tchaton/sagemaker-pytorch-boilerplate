@@ -8,9 +8,11 @@ then
 fi
 
 cd container
+pip install poetry
+poetry export -f requirements.txt -o requirements.txt --without-hashes 
 
-chmod +x decision_trees/train
-chmod +x decision_trees/serve
+chmod +x src/train
+chmod +x src/serve
 
 account=$(aws sts get-caller-identity --query Account --output text)
 

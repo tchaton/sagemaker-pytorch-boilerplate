@@ -21,8 +21,7 @@ from src.training import train
 # https://hydra.cc/docs/next/tutorials/structured_config/hierarchical_static_config
 @hydra.main(config_path="conf", config_name="config")
 def hydra_main(cfg):
-    if cfg.pretty_print:
-        print(cfg.pretty())
+    print(cfg.pretty())
 
     train(cfg=cfg)
 

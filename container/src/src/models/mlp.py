@@ -10,11 +10,11 @@ class Model(pl.LightningModule):
         self.l1 = torch.nn.Linear(28 * 28, 10)
 
     def forward(self, x):
-        return torch.relu(self.l1(x.view(x.size(0), -1)))
+        return F.log_softmax(self.l1(x.view(x.size(0), -1)), -1)
 
     def training_step(self, batch, batch_nb):
         x, y = batch
-        loss = F.cross_entropy(self(x), y)
+        loss = F.nll_loss(self(x), y)
         tensorboard_logs = {'train_loss': loss}
         return {'loss': loss, 'log': tensorboard_logs}
 

@@ -44,6 +44,10 @@ class MNISTDataset(LightningDataModule):
         """
         return 10
 
+    @property
+    def hyper_parameters(self):
+        return {"num_features": self.num_features, "num_classes": self.num_classes}
+
     def prepare_data(self):
         """
         Saves MNIST files to data_dir

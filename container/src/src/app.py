@@ -14,7 +14,6 @@ import flask
 import pandas as pd
 
 # The flask app for serving predictions
-app = flask.Flask(__name__)
 
 
 @app.route("/ping", methods=["GET"])
@@ -38,7 +37,7 @@ def transformation():
     # Convert from CSV to pandas
     if flask.request.content_type == "text/csv":
         data = flask.request.data.decode("utf-8")
-        s = StringIO.StringIO(data)
+        s = StringIO(data)
         data = pd.read_csv(s, header=None)
     else:
         return flask.Response(

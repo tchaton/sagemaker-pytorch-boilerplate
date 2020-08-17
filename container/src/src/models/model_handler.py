@@ -4,29 +4,29 @@ import random
 import torch
 import hydra
 import pytorch_lightning as pl
+from omegaconf import OmegaConf
 from src.paths import Paths
 
 
 class ModelHandler(object):
-
     model = None  # Where we keep the model when it's loaded
 
-    def __init__(self, opt, P):
-        self._initialized = False
-        try:
-            self._opt = opt
-            self._P = P
-            self.model = pl.LightningModule.load_from_checkpoint(P.MODEL_PATH)
-            self.model.eval()
-            self.model.freeze()
-            self._initialized = True
-        except Exception as e:
-            print(e)
-            exit()
+    @classmethod
+    def get_model(cls):
+        """Get the model object for this instance, loading it if it's not already loaded."""
+        if cls.model == None:
+            P = Paths("aws")
+            print(P)
+            cls.model = pl.LightningModule.load_from_checkpoint(P.MODEL_CHECKPOINT_PATH)
+            cls.model.eval()
+            cls.model.freeze()
+        return cls.model
 
-    @property
-    def initialized(self):
-        return self._initialized
-
-    def predict(self, input):
-        return self.model(input)
+    @classmethod
+    def predict(cls, input):
+        """For the input, do the predictions and return them.
+        Args:
+            input (a pandas dataframe): The data on which to do the predictions. There will be
+                one prediction per row in the dataframe"""
+        clf = cls.get_model()
+        return clf(input)

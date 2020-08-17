@@ -10,6 +10,7 @@ from src.paths import Paths
 
 class ModelHandler(object):
     model = None  # Where we keep the model when it's loaded
+    datamodule = None
 
     @classmethod
     def get_model(cls):
@@ -17,9 +18,12 @@ class ModelHandler(object):
         if cls.model == None:
             P = Paths("aws")
             print(P)
-            cls.model = pl.LightningModule.load_from_checkpoint(P.MODEL_CHECKPOINT_PATH)
-            cls.model.eval()
+            trainer = pl.Trainer(resume_from_checkpoint=P.MODEL_CHECKPOINT_PATH)
+            cls.model = trainer.model
             cls.model.freeze()
+            print(cls.model)
+            cls.datamodule = trainer.datamodule
+            print(cls.datamodule)
         return cls.model
 
     @classmethod

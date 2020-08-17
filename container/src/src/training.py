@@ -17,16 +17,11 @@ def train(cfg):
     data_module = hydra.utils.instantiate(cfg.dataset, P=P)
     model = hydra.utils.instantiate(cfg.model, data_module=data_module)
 
-    checkpoint_callback = ModelCheckpoint(
-        filepath=P.MODEL_PATH,
-        save_top_k=1,
-        verbose=True,
-        monitor="val_loss",
-        mode="min",
-        prefix="",
-    )
+    checkpoint_callback = ModelCheckpoint(filepath=P.MODEL_PATH,)
 
     trainer = Trainer(checkpoint_callback=checkpoint_callback, max_epochs=2)
     trainer.fit(model, data_module)
-    trainer.save_checkpoint(P.MODEL_CHECKPOINT_PATH)
+    trainer.save_checkpoint(P.TRAINER_CHECKPOINT_PATH)
+    new_model = model.__class__.load_from_checkpoint(P.TRAINER_CHECKPOINT_PATH)
+    print(new_model)
     print("Training complete.")

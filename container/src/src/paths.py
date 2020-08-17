@@ -16,6 +16,7 @@ class Paths:
     AWS_PREFIX = "/opt/ml/"
     CONFIG_PATH = "/opt/program/conf/config.yaml"
     MODEL_NAME = "model.ckpt"
+    TRAINER_NAME = "trainer.ckpt"
 
     def __init__(self, mode):
         self.MODE = mode
@@ -32,6 +33,7 @@ class Paths:
         self.CHANNEL_NAME = "training"
         self.TRAINING_PATH = os.path.join(self.INPUT_PATH, self.CHANNEL_NAME)
         self.MODEL_CHECKPOINT_PATH = os.path.join(self.MODEL_PATH, self.MODEL_NAME)
+        self.TRAINER_CHECKPOINT_PATH = os.path.join(self.MODEL_PATH, self.TRAINER_NAME)
         self.CONFIG_PATH = config_path
 
     def __repr__(self):

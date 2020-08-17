@@ -43,3 +43,7 @@ class IrisDataset(BaseSagemakerDataset):
         for idx, u in enumerate(self.unique_labels):
             labels[labels == u] = idx
 
+    @staticmethod
+    def process(raw_data):
+        return torch.from_numpy(raw_data.values.astype(np.float)).float()
+

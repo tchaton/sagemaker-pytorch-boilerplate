@@ -15,6 +15,9 @@ class Model(pl.LightningModule):
     def forward(self, x):
         return F.log_softmax(self.l1(x.view(x.size(0), -1)), -1)
 
+    def model_fn(self, x):
+        return self.forward(x).argmax(-1)
+
     def training_step(self, batch, batch_nb):
         if isinstance(batch, (list, tuple)):
             x, y = batch

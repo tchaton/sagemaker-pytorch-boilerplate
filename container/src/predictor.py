@@ -65,10 +65,11 @@ def transformation():
 
     # Do the prediction
     predictions = ModelHandler.predict(data)
+    print(predictions)
 
     # Convert from numpy back to CSV
-    out = StringIO.StringIO()
-    pd.DataFrame({"results": predictions}).to_csv(out, header=False, index=False)
+    out = StringIO()
+    pd.Series(predictions).to_csv(out, header=False, index=False)
     result = out.getvalue()
 
     return flask.Response(response=result, status=200, mimetype="text/csv")

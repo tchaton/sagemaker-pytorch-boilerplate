@@ -1,5 +1,5 @@
 # @package _group_
-target: src.datasets.iris.IRISDataset
+target: src.datasets.iris.IrisDataset
 params:
-  data_dir: '.'
   val_split: 0.3
+  num_workers: 16

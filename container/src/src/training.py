@@ -5,7 +5,7 @@ import torch
 import hydra
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
-
+from src.datasets import *
 from src.paths import Paths
 
 
@@ -14,7 +14,7 @@ def train(cfg):
     P = Paths(cfg)
 
     data_module = hydra.utils.instantiate(cfg.dataset, P=P)
-    model = hydra.utils.instantiate(cfg.model)
+    model = hydra.utils.instantiate(cfg.model, data_module=data_module)
 
     checkpoint_callback = ModelCheckpoint(
         filepath=P.MODEL_PATH,

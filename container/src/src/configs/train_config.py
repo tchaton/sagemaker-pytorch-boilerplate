@@ -37,9 +37,8 @@ class Config:
 
 cs = ConfigStore.instance()
 cs.store(name="config", node=Config)
-cs.store(group="model", name="mlp_template", node=ObjectConf)
-cs.store(group="model", name="new_model", node=ObjectConf)
-cs.store(group="dataset", name="mnist_template", node=ObjectConf)
+cs.store(group="model", name="simple_mlp", node=ObjectConf)
+cs.store(group="dataset", name="mnist", node=ObjectConf)
 cs.store(group="dataset", name="iris", node=ObjectConf)
 cs.store(group="trainer", name="default", node=Trainer)
 

@@ -29,6 +29,14 @@ class MNISTDataset(LightningDataModule):
         self.seed = seed
 
     @property
+    def num_features(self):
+        """
+        Return:
+            10
+        """
+        return 28 * 28
+
+    @property
     def num_classes(self):
         """
         Return:

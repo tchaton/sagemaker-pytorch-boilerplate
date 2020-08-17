@@ -1,91 +1,36 @@
-# This is the file that implements a flask server to do inferences. It's the file that you will modify to
-# implement the scoring for your own algorithm.
+#!/usr/bin/env python
+
+# A sample training component that trains a simple scikit-learn decision tree model.
+# This implementation works in File mode and makes no assumptions about the input file names.
+# Input is specified as CSV with a data point in each row and the labels in the first column.
 
 from __future__ import print_function
 
 import os
+import hydra
+
+os.environ["HYDRA_FULL_ERROR"] = "1"
+import os.path as osp
 import json
 import pickle
-import StringIO
 import sys
-import signal
 import traceback
-import flask
-import pandas as pd
-
-PREFIL = "/opt/ml/"
-MODEL_PATH = os.path.join(PREFIL, "model")
-
-# A singleton for holding the model. This simply loads the model and holds it.
-# It has a predict function that does a prediction based on the model and the input data.
-
-
-class ScoringService(object):
-    model = None  # Where we keep the model when it's loaded
-
-    @classmethod
-    def get_model(cls):
-        """Get the model object for this instance, loading it if it's not already loaded."""
-        if cls.model == None:
-            with open(os.path.join(MODEL_PATH, "decision-tree-model.pkl"), "r") as inp:
-                cls.model = pickle.load(inp)
-        return cls.model
-
-    @classmethod
-    def predict(cls, input):
-        """For the input, do the predictions and return them.
-
-        Args:
-            input (a pandas dataframe): The data on which to do the predictions. There will be
-                one prediction per row in the dataframe"""
-        clf = cls.get_model()
-        return clf.predict(input)
+from omegaconf import DictConfig
+import random
+import torch
+from src.datasets import *
+from src.paths import Paths
+from src.models.model_handler import ModelHandler
+from src.configs.train_config import *
+from src.app import app
 
 
-# The flask app for serving predictions
-app = flask.Flask(__name__)
+# https://hydra.cc/docs/next/tutorials/structured_config/hierarchical_static_config
+@hydra.main(config_path="conf", config_name="config")
+def my_app(cfg: DictConfig) -> None:
+    P = Paths(cfg)
+    model_handler = ModelHandler.load_model(osp.join(P.MODEL_PATH, "model.ckpt"))
 
 
-@app.route("/ping", methods=["GET"])
-def ping():
-    """Determine if the container is working and healthy. In this sample container, we declare
-    it healthy if we can load the model successfully."""
-    health = (
-        ScoringService.get_model() is not None
-    )  # You can insert a health check here
-
-    status = 200 if health else 404
-    return flask.Response(response="\n", status=status, mimetype="application/json")
-
-
-@app.route("/invocations", methods=["POST"])
-def transformation():
-    """Do an inference on a single batch of data. In this sample server, we take data as CSV, convert
-    it to a pandas data frame for internal use and then convert the predictions back to CSV (which really
-    just means one prediction per line, since there's a single column.
-    """
-    data = None
-
-    # Convert from CSV to pandas
-    if flask.request.content_type == "text/csv":
-        data = flask.request.data.decode("utf-8")
-        s = StringIO.StringIO(data)
-        data = pd.read_csv(s, header=None)
-    else:
-        return flask.Response(
-            response="This predictor only supports CSV data",
-            status=415,
-            mimetype="text/plain",
-        )
-
-    print("Invoked with {} records".format(data.shape[0]))
-
-    # Do the prediction
-    predictions = ScoringService.predict(data)
-
-    # Convert from numpy back to CSV
-    out = StringIO.StringIO()
-    pd.DataFrame({"results": predictions}).to_csv(out, header=False, index=False)
-    result = out.getvalue()
-
-    return flask.Response(response=result, status=200, mimetype="text/csv")
+if __name__ == "__main__":
+    my_app()

@@ -6,10 +6,10 @@ This project is a boilerplate codebase to `train / serve / publish` Pytorch Mode
 
 We aim at simplifying MLOps worflow by providing a template for production ready development, allowing ML engineer to focus uniquely on their models and datasets. 
 
-We rely on [Hydra](https://hydra.cc) for elegantly configuring our application and [Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/), a lightweight PyTorch wrapper for ML researchers to scale our model with less boilerplate.
+We rely on [Hydra](https://hydra.cc) for elegantly configuring our application and [Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/), a lightweight PyTorch wrapper for ML researchers to scale their experiments with less boilerplate.
 
 # How to use this project
-
+x
 ```bash
 sh build_local_env.sh 3.7.8 # It will create a local env to ease local dev
 ```

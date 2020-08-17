@@ -16,6 +16,7 @@ class MNISTDataset(LightningDataModule):
         num_workers: int = 16,
         normalize: bool = False,
         seed: int = 42,
+        P=None,
         *args,
         **kwargs,
     ):

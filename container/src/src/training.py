@@ -13,7 +13,7 @@ def train(cfg):
 
     P = Paths(cfg)
 
-    data_module = hydra.utils.instantiate(cfg.dataset)
+    data_module = hydra.utils.instantiate(cfg.dataset, P=P)
     model = hydra.utils.instantiate(cfg.model)
 
     checkpoint_callback = ModelCheckpoint(

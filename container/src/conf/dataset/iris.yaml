@@ -1,0 +1,5 @@
+# @package _group_
+target: src.datasets.iris.IRISDataset
+params:
+  data_dir: '.'
+  val_split: 0.3

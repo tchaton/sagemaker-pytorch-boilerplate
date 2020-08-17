@@ -65,7 +65,6 @@ def transformation():
 
     # Do the prediction
     predictions = ModelHandler.predict(data)
-    print(predictions)
 
     # Convert from numpy back to CSV
     out = StringIO()

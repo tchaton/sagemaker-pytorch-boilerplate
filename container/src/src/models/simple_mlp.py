@@ -8,17 +8,9 @@ from argparse import Namespace
 class Model(pl.LightningModule):
     def __init__(self, *args, **kwargs):
         super().__init__()
-        self._data_module = kwargs.get("data_module", None)
-        if self._data_module is not None:
-            num_features = self._data_module.num_features
-            num_classes = self._data_module.num_classes
-            self.save_hyperparameters(
-                Namespace(num_features=num_features, num_classes=num_classes)
-            )
-        else:
-            num_features, num_classes = args[0]["num_features"], args[0]["num_classes"]
 
-        self.l1 = torch.nn.Linear(num_features, num_classes)
+        self.save_hyperparameters()
+        self.l1 = torch.nn.Linear(kwargs["num_features"], kwargs["num_classes"])
 
     def forward(self, x):
         return F.log_softmax(self.l1(x.view(x.size(0), -1)), -1)

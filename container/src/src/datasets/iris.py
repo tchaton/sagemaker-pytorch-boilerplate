@@ -32,6 +32,10 @@ class IrisDataset(BaseSagemakerDataset):
     def num_classes(self):
         return 3
 
+    @property
+    def hyper_parameters(self):
+        return {"num_features": self.num_features, "num_classes": self.num_classes}
+
     def _labelize(self, raw_data):
         labels = raw_data[:, 0]
         self.unique_labels = np.unique(labels)

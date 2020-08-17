@@ -15,7 +15,7 @@ def train(cfg):
     print(P)
 
     data_module = hydra.utils.instantiate(cfg.dataset, P=P)
-    model = hydra.utils.instantiate(cfg.model, data_module=data_module)
+    model = hydra.utils.instantiate(cfg.model, **data_module.hyper_parameters)
 
     checkpoint_callback = ModelCheckpoint(filepath=P.MODEL_PATH,)
 

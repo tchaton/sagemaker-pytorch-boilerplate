@@ -1,12 +1,15 @@
-# sagemaker-torch-template
+# sagemaker-pytorch-boilerplate
 
 Production ML, as a field, has matured. It’s increasingly common for companies to have at least one model in production. As more teams deploy models, the conversation around tooling has shifted from “What gets the job done?” to “What does it take to deploy a model at production scale?”
 
-This template is a boiler template codebase to train / serve Pytorch Model using AWS Sagemaker.
-ML Engineer will have to take care only about their model definition and dataset.
+This project is a boilerplate codebase to `train / serve / publish` Pytorch Model using AWS Sagemaker.
+
+We aim at simplifying MLOps worflow by providing a template for production ready development, allowing ML engineer to focus uniquely on their models and datasets. 
+
+We rely on [Hydra](https://hydra.cc) for elegantly configuring our application and [Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/), a lightweight PyTorch wrapper for ML researchers to scale their experiments with less boilerplate.
 
 # How to use this project
-
+x
 ```bash
 sh build_local_env.sh 3.7.8 # It will create a local env to ease local dev
 ```

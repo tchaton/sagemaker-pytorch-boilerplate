@@ -22,9 +22,6 @@ def train(cfg):
     trainer = Trainer(checkpoint_callback=checkpoint_callback, max_epochs=2)
     trainer.fit(model, data_module)
     trainer.save_checkpoint(P.TRAINER_CHECKPOINT_PATH)
-    import pdb
-
-    pdb.set_trace()
     new_model = model.__class__.load_from_checkpoint(P.TRAINER_CHECKPOINT_PATH)
     print(new_model)
     print("Training complete.")

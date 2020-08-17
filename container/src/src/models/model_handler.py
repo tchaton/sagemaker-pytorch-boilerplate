@@ -17,11 +17,11 @@ class ModelHandler(object):
     @classmethod
     def get_model(cls):
         """Get the model object for this instance, loading it if it's not already loaded."""
-        initialize(
-            config_path="../../conf", strict=True,
-        )
-        cfg = compose("config.yaml")
         if cls.model == None:
+            initialize(
+                config_path="../../conf", strict=True,
+            )
+            cfg = compose("config.yaml")
             P = Paths("aws")
             model_cls = hydra.utils.get_class(cfg.model.target)
             cls.model = model_cls.load_from_checkpoint(P.TRAINER_CHECKPOINT_PATH)

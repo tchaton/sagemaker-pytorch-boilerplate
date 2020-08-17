@@ -20,7 +20,7 @@ import pandas as pd
 def ping():
     """Determine if the container is working and healthy. In this sample container, we declare
     it healthy if we can load the model successfully."""
-    health = model_handler.initialized
+    health = model_handler.get_model()
 
     status = 200 if health else 404
     return flask.Response(response="\n", status=status, mimetype="application/json")

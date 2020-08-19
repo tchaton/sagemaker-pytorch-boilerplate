@@ -107,3 +107,5 @@ outputs/*
 container/Dockerfile
 requirements.txt
 multirun/*
+container/src
+container/src/*

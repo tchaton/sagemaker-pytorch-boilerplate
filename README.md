@@ -46,7 +46,8 @@ Terminal 1
 ```bash 
 In:
 sh build_and_push.sh {IMAGE_NAME} {MODEL} {DATASET}.
-sh local_test/serve_local.sh {IMAGE_NAME}
+cd local_test
+sh serve_local.sh {IMAGE_NAME}
 ```
 
 ``` bash
@@ -64,7 +65,8 @@ Starting the inference server with 4 workers.
 Terminal 2
 ```bash 
 In:
-sh local_test/predict.sh {SAMPLE_DATA} # Currently support only 'text/csv'
+cd local_test
+sh predict.sh {SAMPLE_DATA} # Currently support only 'text/csv'
 ```
 
 

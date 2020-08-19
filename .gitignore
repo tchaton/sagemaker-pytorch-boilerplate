@@ -101,6 +101,7 @@ ENV/
 /site
 
 *.csv
+*.ckpt
 data/*_dataset/
 .vscode/
 outputs/*
@@ -109,3 +110,4 @@ requirements.txt
 multirun/*
 container/src
 container/src/*
+*.ckpt

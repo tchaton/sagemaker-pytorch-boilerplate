@@ -49,8 +49,10 @@ aws ecr get-login-password \
     --password-stdin ${account}.dkr.ecr.${region}.amazonaws.com
 
 docker push ${fullname}
+
 # Cleaning
 rm -r deployement
 rm Dockerfile
 rm requirements.txt
+rm train
 echo ${fullname}

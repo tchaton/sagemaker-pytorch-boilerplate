@@ -9,7 +9,9 @@ We aim at simplifying MLOps worflow by providing a template for production ready
 We rely on [Hydra](https://hydra.cc) for elegantly configuring our application and [Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/), a lightweight PyTorch wrapper for ML researchers to scale their experiments with less boilerplate.
 
 # How to use this project
-x
+
+This project implements a 1-layer MLP on iris dataset as a baby demo.
+
 ```bash
 sh build_local_env.sh 3.7.8 # It will create a local env to ease local dev
 ```

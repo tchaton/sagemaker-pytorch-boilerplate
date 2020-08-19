@@ -19,13 +19,15 @@ sh build_and_push.sh {IMAGE_NAME} {MODEL} {DATASET}
 # It will build the folder container and push the image to AWS Elastic Container Registry (ECR)
 ```
 
-Train Locally:
+# Local development
+
+## Training
 
 Used to make quick dev.
 
 ```bash
 source .venv/bin/activate
-python container/src/train model={MODEL} dataset={DATASET}
+python src/train model={MODEL} dataset={DATASET}
 ```
 
 or within docker image
@@ -33,9 +35,36 @@ or within docker image
 Used to make sure the docker image is correcly working
 
 ```bash
-cd container/local_test
-train_local.sh ${IMAGE_NAME} ${ARGS_1} ${ARGS_2} ${ARGS_3} ...
+sh local_test/train_local.sh ${IMAGE_NAME} ${ARGS_1} ${ARGS_2} ${ARGS_3} ...
 ```
+
+## Local Serving
+
+Terminal 1
+```bash 
+In:
+sh build_and_push.sh {IMAGE_NAME} {MODEL} {DATASET}.
+sh local_test/serve_local.sh {IMAGE_NAME}
+```
+
+``` bash
+Out:
+Starting the inference server with 4 workers.
+[2020-08-19 11:41:31 +0000] [9] [INFO] Starting gunicorn 20.0.4
+[2020-08-19 11:41:31 +0000] [9] [INFO] Listening at: unix:/tmp/gunicorn.sock (9)
+[2020-08-19 11:41:31 +0000] [9] [INFO] Using worker: gevent
+[2020-08-19 11:41:31 +0000] [13] [INFO] Booting worker with pid: 13
+[2020-08-19 11:41:31 +0000] [14] [INFO] Booting worker with pid: 14
+[2020-08-19 11:41:31 +0000] [15] [INFO] Booting worker with pid: 15
+[2020-08-19 11:41:31 +0000] [16] [INFO] Booting worker with pid: 16
+```
+
+Terminal 2
+```bash 
+In:
+sh local_test/predict.sh {SAMPLE_DATA} # Currently support only 'text/csv'
+```
+
 
 Train on AWS:
 Run workflow.ipynb notebook

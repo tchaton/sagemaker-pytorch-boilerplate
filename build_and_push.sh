@@ -10,12 +10,13 @@ then
 fi
 
 cd container
-cp -r ../src .
+cp -r ../wrapper .
+cp -r ../src wrapper/
 pip install poetry
 poetry export -f requirements.txt -o requirements.txt --without-hashes 
 python render_docker.py
-chmod +x src/train
-chmod +x src/serve
+chmod +x wrapper/train
+chmod +x wrapper/serve
 
 account=$(aws sts get-caller-identity --query Account --output text)
 

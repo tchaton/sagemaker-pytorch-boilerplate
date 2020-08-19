@@ -3,12 +3,7 @@ import os.path as osp
 
 # These are the paths to where SageMaker mounts interesting things in your container.
 LOCAL_PREFIX = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)),
-    "..",
-    "..",
-    "container",
-    "local_test",
-    "test_dir",
+    os.path.dirname(os.path.realpath(__file__)), "..", "local_test", "test_dir",
 )
 
 CONFIG_PATH = os.path.join(

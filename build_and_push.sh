@@ -10,12 +10,14 @@ then
 fi
 
 cd container
-cp -r ../src .
+cp -r ../deployement .
+cp -r ../train deployement
+cp -r ../src deployement/
 pip install poetry
 poetry export -f requirements.txt -o requirements.txt --without-hashes 
 python render_docker.py
-chmod +x src/train
-chmod +x src/serve
+chmod +x deployement/train
+chmod +x deployement/serve
 
 account=$(aws sts get-caller-identity --query Account --output text)
 
@@ -47,8 +49,10 @@ aws ecr get-login-password \
     --password-stdin ${account}.dkr.ecr.${region}.amazonaws.com
 
 docker push ${fullname}
+
 # Cleaning
-rm -r src
+rm -r deployement
 rm Dockerfile
 rm requirements.txt
+rm train
 echo ${fullname}

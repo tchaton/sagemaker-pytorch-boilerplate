@@ -50,4 +50,5 @@ docker push ${fullname}
 # Cleaning
 rm -r src
 rm Dockerfile
+rm requirements.txt
 echo ${fullname}

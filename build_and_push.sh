@@ -10,9 +10,10 @@ then
 fi
 
 cd container
+cp -r ../src .
 pip install poetry
 poetry export -f requirements.txt -o requirements.txt --without-hashes 
-
+python render_docker.py
 chmod +x src/train
 chmod +x src/serve
 
@@ -36,7 +37,6 @@ fi
 
 # Build the docker image locally with the image name and then push it to ECR
 # with the full name.
-python render_docker.py
 docker build --build-arg MODEL=$MODEL --build-arg DATASET=$DATASET -t ${image} .
 docker tag ${image}:latest ${fullname}
 
@@ -47,4 +47,7 @@ aws ecr get-login-password \
     --password-stdin ${account}.dkr.ecr.${region}.amazonaws.com
 
 docker push ${fullname}
+# Cleaning
+rm -r src
+rm Dockerfile
 echo ${fullname}

@@ -10,9 +10,14 @@ then
 fi
 
 cd container
+
 cp -r ../deployement .
+cp -r ../pyproject.toml .
+cp -r ../poetry.lock .
+
 cp -r ../train deployement
 cp -r ../src deployement/
+
 pip install poetry
 poetry export -f requirements.txt -o requirements.txt --without-hashes 
 python render_docker.py
@@ -52,7 +57,8 @@ docker push ${fullname}
 
 # Cleaning
 rm -r deployement
-rm Dockerfile
-rm requirements.txt
-rm train
+rm Dockerfile 
+rm requirements.txt 
+rm pyproject.toml 
+rm poetry.lock
 echo ${fullname}
